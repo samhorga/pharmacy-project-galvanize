@@ -1,24 +1,20 @@
 package com.pharmacy;
 
+import java.util.Objects;
+
 public class Prescription {
-    private String drugName;
-    private int quantity;
+    private Drug drug;
     private String patientName;
     private String doctorName;
 
-    public Prescription(String drugName, int quantity, String patientName, String doctorName) {
-        this.drugName = drugName;
-        this.quantity = quantity;
+    public Prescription(Drug drug,  String patientName, String doctorName) {
+        this.drug = drug;
         this.patientName = patientName;
         this.doctorName = doctorName;
     }
 
-    public String getDrugName() {
-        return drugName;
-    }
-
-    public int getQuantity() {
-        return quantity;
+    public Drug getDrug() {
+        return drug;
     }
 
     public String getPatientName() {
@@ -27,5 +23,20 @@ public class Prescription {
 
     public String getDoctorName() {
         return doctorName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Prescription that = (Prescription) o;
+        return drug.equals(that.drug) &&
+                patientName.equals(that.patientName) &&
+                doctorName.equals(that.doctorName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(drug, patientName, doctorName);
     }
 }

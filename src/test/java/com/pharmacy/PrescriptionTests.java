@@ -8,10 +8,11 @@ public class PrescriptionTests {
 
     @Test
     public void createPrescription() {
-        Prescription prescription = new Prescription("tylenol", 2, "John Adams", "Kevin Abraham");
+        Drug drug = new Drug("tylenol", 2);
+        Prescription prescription = new Prescription(drug, "John Adams", "Kevin Abraham");
 
-        assertEquals("tylenol", prescription.getDrugName());
-        assertEquals(2, prescription.getQuantity());
+        assertEquals("tylenol", prescription.getDrug().getDrugName());
+        assertEquals(2, prescription.getDrug().getQuantity());
         assertEquals("John Adams", prescription.getPatientName());
         assertEquals("Kevin Abraham", prescription.getDoctorName());
     }
