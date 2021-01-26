@@ -6,11 +6,13 @@ public class Prescription {
     private Drug drug;
     private String patientName;
     private String doctorName;
+    private String status;
 
     public Prescription(Drug drug,  String patientName, String doctorName) {
-        this.drug = drug;
+        this.drug = new Drug(drug.getDrugName(), drug.getQuantity(), drug.getPrice());
         this.patientName = patientName;
         this.doctorName = doctorName;
+        this.status = "NOT FILLED";
     }
 
     public Drug getDrug() {
@@ -23,6 +25,14 @@ public class Prescription {
 
     public String getDoctorName() {
         return doctorName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
