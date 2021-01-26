@@ -80,7 +80,6 @@ public class PharmacyTests {
 
         pharmacy.dispenseMedication();
 
-        assertEquals(0, pharmacy.checkQuantity(drug.getDrugName()));
         assertEquals("READY", prescription.getStatus());
     }
 

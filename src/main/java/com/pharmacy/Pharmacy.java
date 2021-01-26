@@ -43,7 +43,7 @@ public class Pharmacy {
 
     public void dispenseMedication() {
         Drug drug = this.getTheDrug(this.prescription.getDrug().getDrugName());
-        if(drug.getQuantity() > 0) {
+        if (drug.getQuantity() > 0) {
             drug.setQuantity(drug.getQuantity() - prescription.getDrug().getQuantity());
             this.prescription.setStatus("READY");
         }
@@ -63,14 +63,14 @@ public class Pharmacy {
     }
 
     public void pickUp() {
-        this.balance+=this.getTheDrug(prescription.getDrug().getDrugName()).getPrice()  * prescription.getDrug().getQuantity();
+        this.balance += this.getTheDrug(prescription.getDrug().getDrugName()).getPrice() * prescription.getDrug().getQuantity();
         this.prescription.setStatus("SOLD");
     }
 
     public double cancelPrescription() {
-        double amountRefunded = this.getTheDrug(prescription.getDrug().getDrugName()).getPrice()  * prescription.getDrug().getQuantity();
+        double amountRefunded = this.getTheDrug(prescription.getDrug().getDrugName()).getPrice() * prescription.getDrug().getQuantity();
         Drug drug = this.getTheDrug(this.prescription.getDrug().getDrugName());
-        if(drug.getQuantity() > 0) {
+        if (drug.getQuantity() > 0) {
             drug.setQuantity(drug.getQuantity() + prescription.getDrug().getQuantity());
             this.prescription.setStatus("CANCELLED");
         }
