@@ -43,9 +43,13 @@ public class Pharmacy {
 
     public void dispenseMedication() {
         Drug drug = this.getTheDrug(this.prescription.getDrug().getDrugName());
-        if (drug.getQuantity() > 0) {
-            drug.setQuantity(drug.getQuantity() - prescription.getDrug().getQuantity());
+        Drug drugInTheStock = this.drugList.stream().filter(drugFounded -> drugFounded.getDrugName().equals(drug.getDrugName())).findFirst().get();
+        if (drugInTheStock.getQuantity() > 0) {
+            drugInTheStock.setQuantity(drugInTheStock.getQuantity() - prescription.getDrug().getQuantity());
             this.prescription.setStatus("READY");
+        } else {
+            this.prescription.setStatus("NOT AVAILABLE IN STOCK");
+            this.getDrugList().remove(drugInTheStock);
         }
     }
 
@@ -60,6 +64,10 @@ public class Pharmacy {
 
     public double getBalance() {
         return balance;
+    }
+
+    public List<Drug> getDrugList() {
+        return drugList;
     }
 
     public void pickUp() {

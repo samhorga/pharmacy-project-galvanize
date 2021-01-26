@@ -5,24 +5,26 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class PharmacyTests {
 
-    Pharmacy pharmacy;
+    private Pharmacy pharmacy;
+    private Drug drug;
 
     @Before
     public void setUp() {
         pharmacy = new Pharmacy();
+        drug = new Drug("tylenol", 2, 14.34d);
     }
 
     @Test
     public void checkDrugAvailability() {
-        pharmacy.add(new Drug("tylenol", 10, 14.34d));
+        pharmacy.add(drug);
 
         int actualQuantity = pharmacy.checkQuantity("tylenol");
 
-        assertEquals(10, actualQuantity);
-
+        assertEquals(2, actualQuantity);
     }
 
     @Test(expected = DrugNotFoundException.class)
@@ -32,7 +34,6 @@ public class PharmacyTests {
 
     @Test
     public void checkPrescriptionValid() {
-        Drug drug = new Drug("tylenol", 2, 14.34d);
         pharmacy.add(drug);
         Prescription prescription = new Prescription(drug, "John Adams", "Kevin Abraham");
 
@@ -44,7 +45,6 @@ public class PharmacyTests {
 
     @Test
     public void checkPrescriptionNotValid() {
-        Drug drug = new Drug("tylenol", 2, 14.34d);
         pharmacy.add(drug);
         Prescription prescription = new Prescription(drug, "John Adams", "Kevin Abraham");
 
@@ -59,7 +59,6 @@ public class PharmacyTests {
 
     @Test
     public void dispenseMedication() {
-        Drug drug = new Drug("tylenol", 2, 14.34d);
         pharmacy.add(drug);
         Prescription prescription = new Prescription(drug, "John Adams", "Kevin Abraham");
 
@@ -72,7 +71,6 @@ public class PharmacyTests {
 
     @Test
     public void changeStatusToReady() {
-        Drug drug = new Drug("tylenol", 2, 14.34d);
         pharmacy.add(drug);
         Prescription prescription = new Prescription(drug, "John Adams", "Kevin Abraham");
 
@@ -85,7 +83,6 @@ public class PharmacyTests {
 
     @Test
     public void checkPharmacyBalance() {
-        Drug drug = new Drug("tylenol", 2, 14.34d);
         pharmacy.add(drug);
         Prescription prescription = new Prescription(drug, "John Adams", "Kevin Abraham");
 
@@ -100,7 +97,6 @@ public class PharmacyTests {
 
     @Test
     public void changeStatusToSold() {
-        Drug drug = new Drug("tylenol", 2, 14.34d);
         pharmacy.add(drug);
         Prescription prescription = new Prescription(drug, "John Adams", "Kevin Abraham");
 
@@ -115,7 +111,6 @@ public class PharmacyTests {
 
     @Test
     public void cancelPrescription() {
-        Drug drug = new Drug("tylenol", 2, 14.34d);
         pharmacy.add(drug);
         Prescription prescription = new Prescription(drug, "John Adams", "Kevin Abraham");
 
@@ -128,4 +123,27 @@ public class PharmacyTests {
         assertEquals(28.68, refundedAmount, 0.1);
     }
 
+    @Test
+    public void changeStatusToNotAvailableInStock() {
+        pharmacy.add(drug);
+        pharmacy.getDrugList().get(0).setQuantity(0);
+        Prescription prescription = new Prescription(drug, "John Adams", "Kevin Abraham");
+
+        pharmacy.setPrescription(prescription);
+        pharmacy.dispenseMedication();
+
+        assertEquals("NOT AVAILABLE IN STOCK", prescription.getStatus());
+    }
+
+    @Test
+    public void removeDrugFromThePharmacyWhenQuantityIs0() {
+        pharmacy.add(drug);
+        pharmacy.getDrugList().get(0).setQuantity(0);
+        Prescription prescription = new Prescription(drug, "John Adams", "Kevin Abraham");
+
+        pharmacy.setPrescription(prescription);
+        pharmacy.dispenseMedication();
+
+        assertFalse(pharmacy.getDrugList().contains(drug));
+    }
 }
