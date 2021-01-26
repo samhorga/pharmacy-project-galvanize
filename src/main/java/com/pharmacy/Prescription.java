@@ -1,4 +1,4 @@
-package com.pharmacy.prescription;
+package com.pharmacy;
 
 public class Prescription {
     private String drugName;

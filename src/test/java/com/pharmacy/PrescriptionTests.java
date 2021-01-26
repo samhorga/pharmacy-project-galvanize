@@ -1,4 +1,4 @@
-package com.pharmacy.prescription;
+package com.pharmacy;
 
 import org.junit.Test;
 
